@@ -16,6 +16,7 @@ import com.typesafe.sbt.web.SbtWeb
 import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.typesafe.sbt.gzip.Import._
 import com.typesafe.sbt.web.pipeline.Pipeline
+import com.heroku.sbt.HerokuPlugin.autoImport._
 
 object Versions {
   val app = "0.1.0-SNAPSHOT"
@@ -51,7 +52,9 @@ object ApplicationBuild extends Build with UniversalKeys {
       "com.vmunier" %% "play-scalajs-scripts" % "0.1.0",
       "org.webjars" % "jquery" % "1.11.1"
     ),
-    EclipseKeys.skipParents in ThisBuild := false
+    EclipseKeys.skipParents in ThisBuild := false,
+    herokuSkipSubProjects in Compile := false,
+    herokuAppName in Compile := "stable-test-sbt"
   )
   .enablePlugins(PlayScala,SbtWeb)
   .aggregate(clients.map(projectToRef): _*)
